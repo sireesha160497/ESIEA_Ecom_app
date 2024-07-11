@@ -1,5 +1,6 @@
 package com.ecom.product;
 
-public interface PriceObserver {
-    public void updateProduct(Product product, double price);
+import com.ecom.order.OrderObserver;
+
+public interface PriceObserver extends OrderObserver {
 }

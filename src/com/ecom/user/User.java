@@ -11,11 +11,7 @@ public class User {
         this.password = password;
     }
 
-    public void login(String name, String password) {
-        if (this.name.equals(name) && this.password.equals(password)) {
-            System.out.println("Login successful!");
-        } else {
-            System.out.println("Invalid credentials!");
-        }
+    public boolean login(String name, String password) {
+        return this.name.equals(name) && this.password.equals(password);
     }
 }

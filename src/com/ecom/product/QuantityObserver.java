@@ -1,5 +1,6 @@
 package com.ecom.product;
 
-public interface QuantityObserver {
-    public void updateProductQuantity(Product product, int quantity);
+import com.ecom.order.OrderObserver;
+
+public interface QuantityObserver extends OrderObserver {
 }

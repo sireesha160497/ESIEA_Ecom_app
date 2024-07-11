@@ -1,64 +1,86 @@
 package com.ecom.order;
 
 import com.ecom.product.Product;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Order {
-    private int orderID;
+    private int orderId;
     private List<Product> products;
-    private double totalPrice;
+    private List<OrderObserver> observers;
+    private double discount;
     private double shippingCost;
 
-    public Order(int orderID) {
-        this.orderID = orderID;
+    public Order(int orderId) {
+        this.orderId = orderId;
         this.products = new ArrayList<>();
-        this.totalPrice = 0.0;
-        this.shippingCost = 10.0;
+        this.observers = new ArrayList<>();
+        this.discount = 0;
+        this.shippingCost = 10;
     }
 
-    public int getOrderID() {
-        return orderID;
+    public void addProduct(Product product) {
+        boolean productExists = false;
+        for (Product p : products) {
+            if (p.getProductID() == product.getProductID()) {
+                p.setProductQuantity(p.getProductQuantity() + 1);
+                productExists = true;
+                break;
+            }
+        }
+        if (!productExists) {
+            product.setProductQuantity(1);
+            products.add(product);
+        }
+        notifyObservers();
     }
 
-    public List<Product> getProducts() {
-        return products;
+    public int getTotalQuantity() {
+        return products.stream().mapToInt(Product::getProductQuantity).sum();
     }
 
     public double getTotalPrice() {
-        return totalPrice;
+        return products.stream().mapToDouble(p -> p.getProductPrice() * p.getProductQuantity()).sum();
+    }
+
+    public double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
     }
 
     public double getShippingCost() {
         return shippingCost;
     }
 
-    public void addProduct(Product product) {
-        products.add(product);
-        totalPrice += product.getProductPrice();
+    public void setShippingCost(double shippingCost) {
+        this.shippingCost = shippingCost;
     }
 
-    public void applyPriceDiscount() {
-        if (totalPrice > 200) {
-            totalPrice -= 20;
-        }
+    public void addObserver(OrderObserver observer) {
+        observers.add(observer);
     }
 
-    public void updateShippingCost() {
-        int totalQuantity = products.stream().mapToInt(Product::getProductQuantity).sum();
-        if (totalQuantity > 5) {
-            shippingCost = 0;
-        } else {
-            shippingCost = 10;
+    public void removeObserver(OrderObserver observer) {
+        observers.remove(observer);
+    }
+
+    public void notifyObservers() {
+        for (OrderObserver observer : observers) {
+            observer.updateOrder(this);
         }
     }
 
     public void displayOrderDetails() {
-        System.out.println("Order ID: " + orderID);
-        for (Product product : products) {
-            product.displayProductDetails();
-        }
-        System.out.println("Total Price: " + totalPrice);
-        System.out.println("Shipping Cost: " + shippingCost);
+        System.out.println("Order ID: " + orderId);
+        products.forEach(Product::displayProductDetails);
+        System.out.println("Total Quantity: " + getTotalQuantity());
+        System.out.println("Total Price: " + getTotalPrice());
+        System.out.println("Discount: " + getDiscount());
+        System.out.println("Shipping Cost: " + getShippingCost());
+        System.out.println("Final Total: " + (getTotalPrice() - getDiscount() + getShippingCost()));
     }
 }

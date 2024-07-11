@@ -4,10 +4,10 @@ public class Product {
     private int productID;
     private String productName;
     private String productDescription;
-    private int productPrice;
+    private double productPrice;
     private int productQuantity;
 
-    public Product(int productID, String productName, String productDescription, int productPrice, int productQuantity) {
+    public Product(int productID, String productName, String productDescription, double productPrice, int productQuantity) {
         this.productID = productID;
         this.productName = productName;
         this.productDescription = productDescription;
@@ -19,36 +19,24 @@ public class Product {
         return productID;
     }
 
-    public void setProductID(int productID) {
-        this.productID = productID;
-    }
-
     public String getProductName() {
         return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
     }
 
     public String getProductDescription() {
         return productDescription;
     }
 
-    public void setProductDescription(String productDescription) {
-        this.productDescription = productDescription;
-    }
-
-    public int getProductPrice() {
+    public double getProductPrice() {
         return productPrice;
-    }
-
-    public void setProductPrice(int productPrice) {
-        this.productPrice = productPrice;
     }
 
     public int getProductQuantity() {
         return productQuantity;
+    }
+
+    public void setProductPrice(double productPrice) {
+        this.productPrice = productPrice;
     }
 
     public void setProductQuantity(int productQuantity) {
@@ -61,5 +49,10 @@ public class Product {
         System.out.println("Product Description: " + productDescription);
         System.out.println("Product Price: " + productPrice);
         System.out.println("Product Quantity: " + productQuantity);
+    }
+
+    @Override
+    public String toString() {
+        return productName + " - $" + productPrice;
     }
 }

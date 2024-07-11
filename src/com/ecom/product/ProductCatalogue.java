@@ -1,13 +1,26 @@
 package com.ecom.product;
 
-public class ProductCatalogue {
-    private Product product;
+import java.util.ArrayList;
+import java.util.List;
 
-    public ProductCatalogue(Product product) {
-        this.product = product;
+public class ProductCatalogue {
+    private List<Product> products;
+
+    public ProductCatalogue() {
+        this.products = new ArrayList<>();
     }
 
-    public void viewProductDetails() {
-        product.displayProductDetails();
+    public void addProduct(Product product) {
+        products.add(product);
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void displayProductDetails() {
+        for (Product product : products) {
+            product.displayProductDetails();
+        }
     }
 }

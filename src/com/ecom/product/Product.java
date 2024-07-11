@@ -7,6 +7,14 @@ public class Product {
     private int productPrice;
     private int productQuantity;
 
+    public Product(int productID, String productName, String productDescription, int productPrice, int productQuantity) {
+        this.productID = productID;
+        this.productName = productName;
+        this.productDescription = productDescription;
+        this.productPrice = productPrice;
+        this.productQuantity = productQuantity;
+    }
+
     public int getProductID() {
         return productID;
     }
@@ -46,6 +54,7 @@ public class Product {
     public void setProductQuantity(int productQuantity) {
         this.productQuantity = productQuantity;
     }
+
     public void displayProductDetails() {
         System.out.println("Product ID: " + productID);
         System.out.println("Product Name: " + productName);
@@ -53,10 +62,4 @@ public class Product {
         System.out.println("Product Price: " + productPrice);
         System.out.println("Product Quantity: " + productQuantity);
     }
-    /*public void updateProductDetails() {
-
-    }
-    public void addToCart(){
-
-    }*/
 }
